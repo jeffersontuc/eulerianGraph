@@ -1,10 +1,10 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import Lib
-import System.IO (readFile)
-import Data.Time (getCurrentTime)
+import Web.Scotty
 
-main :: IO ()
 main = do
-  time <- getCurrentTime
-  putStrLn (show time)
+  putStrLn "Iniciando server"
+  scotty 3000 $ do
+      get "/hello" $ do
+          text "hello world!"

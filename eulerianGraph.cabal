@@ -46,6 +46,7 @@ executable eulerianGraph-exe
       base >=4.7 && <5
     , eulerianGraph
     , time
+    , scotty
   default-language: Haskell2010
 
 test-suite eulerianGraph-test
