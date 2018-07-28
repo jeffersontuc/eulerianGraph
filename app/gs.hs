@@ -5,16 +5,60 @@ type Edge = (Char, Char)
 type Graph = [Edge]
 
 
-grafo = [('a', 'b'), ('b', 'c')]
-
-
-
-countEdges :: Graph -> Integer
+countEdges :: Graph -> Int
 countEdges [] = 0
-countEdges ((a,b):xs) = 1 + countEdges xs
+countEdges (x:[]) = 1
+countEdges (x:xs) = 1 + countEdges xs
+
+countVertices :: Graph -> Int
+countVertices [] = 0
+countVertices (x:[]) = 2
+countVertices (x:xs) = length( compress (tupleToList (x:xs)) )
 
 
+tupleToList :: [(a, a)] -> [a]
+tupleToList ([]) = [] 
+tupleToList (x:[]) = (fst x):(snd x):[]
+tupleToList (x:xs) = (fst x):(snd x):(tupleToList xs)
+
+{-
+- Remove os elementos duplicados de uma lista. Ex: compress [2,5,8,2,1,8] = [2,5,8,1]
+-}
+compress :: Eq t => [t] -> [t]
+compress [] = []
+compress (x:xs) | (elem x xs) = compress (x:(remove x xs))
+                | otherwise = x:(compress xs)
+
+remove :: Eq a => a -> [a] -> [a]
+remove e (x:xs) | e == x = xs
+                | otherwise = x:(remove e xs)
+
+removeAll :: Eq t => t -> [t] -> [t]
+removeAll e [] = []
+removeAll e (x:xs) | e == x = removeAll e xs
+                   | otherwise = x:(removeAll e xs)
+
+{-
+- Retorna uma lista de pares com os elementos e suas quantidades. Ex: encode [2,2,2,3,4,2,5,2,4,5] = [(2,5),(3,1),(4,2),(5,2)]
+-}
+encode xs = compress ([(a,b) | a <- xs, b <- [0..(length xs)], b==(length (filter (a==) xs))])
+encode' xs = encode (tupleToList xs)
+{-
+- LEMBRAR - Um grafo G CONEXO possui caminho euleriano se e somente se ele tem exatamente ZERO ou DOIS vértices de grau impar. 
+-}
+
+-------------------------------------------------
+grafo = [('a', 'b'), ('b', 'c')] -- exemplo teste
+-------------------------------------------------
+
+main :: IO ()
 main = do
-  let re = countEdges grafo
-  print re
-
+  print "Inform the graph: (Ex: [('a', 'b'), ('b', 'c')])"
+  input <- getLine
+  let graph = read input
+  let numberEdges = countEdges graph
+  let numberVertices = countVertices graph
+  let degreesVertices = encode' graph
+  putStrLn ("This graph have " ++ (show(numberEdges)) ++ " edge/es.")
+  putStrLn ("This graph have " ++ (show(numberVertices)) ++ " vertixe/ces.")
+  putStrLn ("Each vertixe this graph, have the following degree/es: " ++ (show(degreesVertices)))
