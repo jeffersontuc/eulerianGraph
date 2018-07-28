@@ -47,6 +47,13 @@ encode' xs = encode (tupleToList xs)
 - LEMBRAR - Um grafo G CONEXO possui caminho euleriano se e somente se ele tem exatamente ZERO ou DOIS vértices de grau impar. 
 -}
 
+degreeList [] = []
+degreeList (x:xs) = (snd x):(degreeList xs)
+
+typeGraph xs | and (map even xs) = putStrLn ("It's Eulerian cycle graph")
+             | even (length(filter odd xs)) = putStrLn ("It's Semi-Eulerian graph")
+             | otherwise = putStrLn ("It's not Eulerian graph")
+
 -------------------------------------------------
 grafo = [('a', 'b'), ('b', 'c')] -- exemplo teste
 -------------------------------------------------
@@ -59,6 +66,8 @@ main = do
   let numberEdges = countEdges graph
   let numberVertices = countVertices graph
   let degreesVertices = encode' graph
+  let result = typeGraph (degreeList (encode' graph))
   putStrLn ("This graph have " ++ (show(numberEdges)) ++ " edge/es.")
   putStrLn ("This graph have " ++ (show(numberVertices)) ++ " vertixe/ces.")
   putStrLn ("Each vertixe this graph, have the following degree/es: " ++ (show(degreesVertices)))
+  result
