@@ -12,6 +12,20 @@
 - stack ghci (Abre o terminal ghci onde você pode executar as funções definidas no arquivo app/Main.hs)
 
 
+# Rodar o servidor (Precisa ter o stack instalado)
+
+- stack build
+- stack ghci
+- >> main (no terminal que irá abrir ao executar o comando anterior)
+
+
+## Rodar o client (Precisa de Nodejs instalado na máquina)
+
+- cd client
+- npm install
+- node index.js
+
+
 ## Links úteis
 
 * [Instalar o stack] https://docs.haskellstack.org/en/stable/README/
