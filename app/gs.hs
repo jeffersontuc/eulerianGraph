@@ -101,12 +101,12 @@ tuplesToString (x:xs) = (fst x):(snd x):(tuplesToString xs)
 {-
 -- Função auxiliar de typeGraph, que verifica e imprime se o grafo não é euleriano, é euleriano ou semi-euleriano 
 -}
---typeGraph' :: Integral a => [a] -> Graph -> IO ()
+typeGraph' :: Integral a => [a] -> t -> Bool -> IO ()
 typeGraph' xs ys connected | ( connected ) && ( and (map even xs) ) = putStrLn ("It's Eulerian cycle graph")
                            | ( connected ) && ( even (length(filter odd xs)) ) = putStrLn ("It's Semi-Eulerian graph")
                            | otherwise = putStrLn ("It's not Eulerian graph")
 
---typeGraph :: [(Vertex, Int)] -> Graph -> IO ()
+typeGraph :: [(Vertex, Int)] -> t -> Bool -> IO ()
 typeGraph xs ys connected = typeGraph' (degreesList xs) ys connected
 -----------------------------------------------------------------------------------------------------------------
 
@@ -129,20 +129,16 @@ degreeZeroVertices xs (y:ys) | elem y xs = degreeZeroVertices xs ys
 {-
 -- Retorna se o grafo é connectado ou não.
 -}
-{-
---isConnected :: Graph -> Bool
---isConnected [] = False
---isConnected xs = ((countEdges xs) >= ((countVertices xs)-1)) && ((countEdges xs)>0 && (countVertices xs)>0)
--}
-g a ([]) ([]) = True
-g a (x:xs) ([]) = True
-g a ([]) (y:ys) = False
-g a (x:xs) (y:ys) | (a/=(snd x)) = g (snd x) xs ys
-                  | otherwise = g (snd x) (xs) (ys)
+verifyConnected :: Eq a => a -> [(a1, a)] -> [t] -> Bool
+verifyConnected a ([]) ([]) = True
+verifyConnected a (x:xs) ([]) = True
+verifyConnected a ([]) (y:ys) = False
+verifyConnected a (x:xs) (y:ys) | (a/=(snd x)) = verifyConnected (snd x) xs ys
+                  | otherwise = verifyConnected (snd x) (xs) (ys)
+
 main :: IO ()
 main = do
   -- Recebendo o grafo
-  putStrLn ""
   print "Inform the graph: (Ex: [('a', 'b'), ('b', 'c')])"
   input <- getLine
   let graph = read input
@@ -157,9 +153,10 @@ main = do
   let degreeZeroVerticesList = degreeZeroVertices (verticesWithDegree degreesVertices) verticesList
   let allDegreesVerticesList = degreesVertices ++ degreeZeroVerticesList
 
-  --let t = g (fst (head (sort (sortTuplesInList (compress graph)))) ) (sort (sortTuplesInList (compress graph))) verticesList
-  let t = g (fst (head ((sortTuplesInList ( graph)))) ) ((sortTuplesInList ( graph))) verticesList
-  let w = ( (verticesList/="") && (degreeZeroVerticesList==[]) && t )
+  --Testa se o grafo é conexo
+  let connected = verifyConnected (fst (head (sortTuplesInList ( graph))) ) (sortTuplesInList ( graph)) verticesList
+  let isConnected = ( (verticesList/="") && (degreeZeroVerticesList==[]) && connected )
+
   -- Imprimindo os resultados
   putStrLn ""
   putStrLn ("Then...")
@@ -167,7 +164,4 @@ main = do
   putStrLn ("This graph has " ++ (show numberEdges) ++ " edges.")
   putStrLn ("This graph has " ++ (show numberVertices) ++ " vertices.")
   putStrLn ("Each vertex this graph, has the following degrees: " ++ (show allDegreesVerticesList))
-  typeGraph allDegreesVerticesList graph w
-
-  print w
-  
+  typeGraph allDegreesVerticesList graph isConnected  
