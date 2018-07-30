@@ -1,3 +1,5 @@
+module Grafo where
+
 import Data.Maybe
 import Data.List
 import Control.Monad
@@ -139,35 +141,5 @@ g a (x:xs) ([]) = True
 g a ([]) (y:ys) = False
 g a (x:xs) (y:ys) | (a/=(snd x)) = g (snd x) xs ys
                   | otherwise = g (snd x) (xs) (ys)
-main :: IO ()
-main = do
-  -- Recebendo o grafo
-  putStrLn ""
-  print "Inform the graph: (Ex: [('a', 'b'), ('b', 'c')])"
-  input <- getLine
-  let graph = read input
-  
-  -- Calculando dados sobre o grafo
-  let numberEdges = countEdges graph
-  let numberVertices = countVertices graph
 
-  let verticesList = (compress (removeWhiteSpaces (tuplesToString graph)))
-
-  let degreesVertices = calculatingDegrees graph
-  let degreeZeroVerticesList = degreeZeroVertices (verticesWithDegree degreesVertices) verticesList
-  let allDegreesVerticesList = degreesVertices ++ degreeZeroVerticesList
-
-  --let t = g (fst (head (sort (sortTuplesInList (compress graph)))) ) (sort (sortTuplesInList (compress graph))) verticesList
-  let t = g (fst (head ((sortTuplesInList ( graph)))) ) ((sortTuplesInList ( graph))) verticesList
-  let w = ( (verticesList/="") && (degreeZeroVerticesList==[]) && t )
-  -- Imprimindo os resultados
-  putStrLn ""
-  putStrLn ("Then...")
-  putStrLn ""
-  putStrLn ("This graph has " ++ (show numberEdges) ++ " edges.")
-  putStrLn ("This graph has " ++ (show numberVertices) ++ " vertices.")
-  putStrLn ("Each vertex this graph, has the following degrees: " ++ (show allDegreesVerticesList))
-  typeGraph allDegreesVerticesList graph w
-
-  print w
   
