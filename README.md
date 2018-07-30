@@ -11,9 +11,11 @@
 - stack build (Comando inicial. Instala as bibliotecas que foram importadas no eulerianGraph.cabal)
 - stack ghci (Abre o terminal ghci onde você pode executar as funções definidas no arquivo app/Main.hs)
 
+- Foi adicionado um arquivo gs.hs na pasta app com o propósito de executar o código através do terminal (Sem servidor)
 
 # Rodar o servidor (Precisa ter o stack instalado)
 
+- Comentar/Remover o bloco main que existe no arquivo app/gs.hs (O stack não compilará se houver conflito de mains)
 - stack build
 - stack ghci
 - >> main (no terminal que irá abrir ao executar o comando anterior)
