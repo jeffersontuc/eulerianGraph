@@ -5,6 +5,7 @@ app.service('indexService', function($http){
     service.getNumberEdges = getNumberEdges;
     service.getNumberVertex = getNumberVertex;
     service.getDegrees = getDegrees;
+    service.getResult = getResult;
 
     var url = 'http://localhost:3000/';
 
@@ -24,6 +25,11 @@ app.service('indexService', function($http){
     function getDegrees(){
         return $http.get(url + 'degrees');
     }
+
+    function getResult(){
+        return $http.get(url + 'result');
+    }
+
 
     return service;
 })

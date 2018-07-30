@@ -26,13 +26,7 @@ routes = do
       let allDegreesVerticesList = degreesVertices ++ degreeZeroVerticesList
       json allDegreesVerticesList
   get "/result" $ do
-      let verticesList = (compress (removeWhiteSpaces (tuplesToString graph)))
-      let degreesVertices = calculatingDegrees graph
-      let degreeZeroVerticesList = degreeZeroVertices (verticesWithDegree degreesVertices) verticesList
-      let allDegreesVerticesList = degreesVertices ++ degreeZeroVerticesList
-      let connected = verifyConnected (fst (head (sortTuplesInList ( graph))) ) (sortTuplesInList ( graph)) verticesList
-      let isConnected = ( (verticesList/="") && (degreeZeroVerticesList==[]) && connected )
-      text "jjs"
+      text "Not done! =("
 
 
 main = scotty 3000 routes

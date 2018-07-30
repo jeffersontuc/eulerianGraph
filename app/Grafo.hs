@@ -104,7 +104,7 @@ tuplesToString (x:xs) = (fst x):(snd x):(tuplesToString xs)
 -}
 typeGraph' :: Integral a => [a] -> t -> Bool -> IO ()
 typeGraph' xs ys connected | ( connected ) && ( and (map even xs) ) = putStrLn ("It's Eulerian cycle graph")
-                           | ( connected ) && ( even (length(filter odd xs)) ) = putStrLn ("It's Semi-Eulerian graph")
+                           | ( connected ) && ( (length(filter odd xs)) == 2) = putStrLn ("It's Semi-Eulerian graph")
                            | otherwise = putStrLn ("It's not Eulerian graph")
 
 typeGraph :: [(Vertex, Int)] -> t -> Bool -> IO ()

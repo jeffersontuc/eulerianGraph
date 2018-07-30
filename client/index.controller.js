@@ -16,6 +16,10 @@ app.controller('indexController', function(indexService){
             vm.degrees = response.data;
             console.log(vm.degrees);
         })
+
+        indexService.getResult().then(function(response){
+            console.log(response.data);
+        })
     }
 
     getHello();
