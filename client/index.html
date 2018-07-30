@@ -4,9 +4,19 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     </head>
 	
-    <body ng-controller="indexController">
-        <h1>Olá, mundo!</h1>
-        {{2 + 2}}
+    <body ng-controller="indexController as ctrl">
+        <h1>This Graph has {{ctrl.numberEdges}} edges.</h1>
+        <h1>This Graph has {{ctrl.numberVertex}} Vertex.</h1>
+
+        <div>
+            <h1>Each vertex this graph, has the following degrees: </h1>
+
+
+            <div>{{degrees}}</div>
+
+            <h3 ng-repeat="pair in ctrl.degrees">{{pair[0]}}: {{pair[1]}}</h3>
+        </div>
+
 
         <script src="app.js"></script>
         <script src="index.controller.js"></script>
