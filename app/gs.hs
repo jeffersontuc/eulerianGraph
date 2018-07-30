@@ -101,13 +101,13 @@ tuplesToString (x:xs) = (fst x):(snd x):(tuplesToString xs)
 {-
 -- Função auxiliar de typeGraph, que verifica e imprime se o grafo não é euleriano, é euleriano ou semi-euleriano 
 -}
-typeGraph' :: Integral a => [a] -> Graph -> IO ()
-typeGraph' xs ys | ( isConnected ys ) && ( and (map even xs) ) = putStrLn ("It's Eulerian cycle graph")
-                | ( isConnected ys ) && ( even (length(filter odd xs)) ) = putStrLn ("It's Semi-Eulerian graph")
-                | otherwise = putStrLn ("It's not Eulerian graph")
+--typeGraph' :: Integral a => [a] -> Graph -> IO ()
+typeGraph' xs ys connected | ( connected ) && ( and (map even xs) ) = putStrLn ("It's Eulerian cycle graph")
+                           | ( connected ) && ( even (length(filter odd xs)) ) = putStrLn ("It's Semi-Eulerian graph")
+                           | otherwise = putStrLn ("It's not Eulerian graph")
 
-typeGraph :: [(Vertex, Int)] -> Graph -> IO ()
-typeGraph xs ys = typeGraph' (degreesList xs) ys
+--typeGraph :: [(Vertex, Int)] -> Graph -> IO ()
+typeGraph xs ys connected = typeGraph' (degreesList xs) ys connected
 -----------------------------------------------------------------------------------------------------------------
 
 {-
@@ -159,6 +159,7 @@ main = do
 
   --let t = g (fst (head (sort (sortTuplesInList (compress graph)))) ) (sort (sortTuplesInList (compress graph))) verticesList
   let t = g (fst (head ((sortTuplesInList ( graph)))) ) ((sortTuplesInList ( graph))) verticesList
+  let w = ( (verticesList/="") && (degreeZeroVerticesList==[]) && t )
   -- Imprimindo os resultados
   putStrLn ""
   putStrLn ("Then...")
@@ -166,7 +167,7 @@ main = do
   putStrLn ("This graph has " ++ (show numberEdges) ++ " edges.")
   putStrLn ("This graph has " ++ (show numberVertices) ++ " vertices.")
   putStrLn ("Each vertex this graph, has the following degrees: " ++ (show allDegreesVerticesList))
-  typeGraph allDegreesVerticesList graph
+  typeGraph allDegreesVerticesList graph w
 
-  print ( (verticesList/="") && (degreeZeroVerticesList==[]) && t )
+  print w
   
