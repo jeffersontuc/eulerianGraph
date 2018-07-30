@@ -30,7 +30,9 @@ routes = do
       let degreesVertices = calculatingDegrees graph
       let degreeZeroVerticesList = degreeZeroVertices (verticesWithDegree degreesVertices) verticesList
       let allDegreesVerticesList = degreesVertices ++ degreeZeroVerticesList
-      json typeGraph allDegreesVerticesList graph isConnected
+      let connected = verifyConnected (fst (head (sortTuplesInList ( graph))) ) (sortTuplesInList ( graph)) verticesList
+      let isConnected = ( (verticesList/="") && (degreeZeroVerticesList==[]) && connected )
+      text "jjs"
 
 
 main = scotty 3000 routes

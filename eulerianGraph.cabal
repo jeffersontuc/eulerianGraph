@@ -38,8 +38,7 @@ library
 executable eulerianGraph-exe
   main-is: Main.hs
   other-modules:
-      Paths_eulerianGraph
-    , Grafo  
+      Paths_eulerianGraph 
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
